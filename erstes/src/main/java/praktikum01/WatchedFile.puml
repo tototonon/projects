@@ -1,0 +1,28 @@
+@startuml
+state insync
+state modified
+state deleted
+state gone
+state created
+
+[*] --> created : CREATE
+created --> created : CREATE
+created --> created : MODIFY
+created --> insync : SYNC
+created --> gone : DELETE
+gone --> gone : SYNC
+gone --> gone : MODIFY
+gone --> gone : DELETE
+deleted --> deleted : DELETE
+deleted --> gone : SYNC
+deleted --> modified : CREATE
+deleted --> modified : DELETE
+modified --> deleted : DELETE
+modified --> modified : CREATE
+modified --> modified : MODIFY
+modified --> insync : SYNC
+insync --> insync : SYNC
+insync --> modified : MODIFY
+insync --> modified : CREATE
+insync --> deleted : DELETE
+@enduml
